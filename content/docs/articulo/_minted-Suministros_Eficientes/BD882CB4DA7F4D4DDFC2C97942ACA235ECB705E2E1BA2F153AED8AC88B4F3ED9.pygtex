@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{l+m+mi}{5}\PYG{p}{))}
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{suptitle}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Proporción de producción de energía en Colombia Renovables vs No renovables\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{pie}\PYG{p}{(}\PYG{n}{x}\PYG{o}{=}\PYG{n}{suma}\PYG{p}{,} \PYG{n}{labels}\PYG{o}{=}\PYG{n}{suma}\PYG{o}{.}\PYG{n}{index}\PYG{p}{,} \PYG{n}{autopct}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}.1f\PYGZpc{}\PYGZpc{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{startangle}\PYG{o}{=}\PYG{l+m+mi}{90}\PYG{p}{,} \PYG{n}{colors}\PYG{o}{=}\PYG{n}{sns}\PYG{o}{.}\PYG{n}{color\PYGZus{}palette}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}pastel\PYGZdq{}}\PYG{p}{))}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{tight\PYGZus{}layout}\PYG{p}{()}	
+\end{Verbatim}

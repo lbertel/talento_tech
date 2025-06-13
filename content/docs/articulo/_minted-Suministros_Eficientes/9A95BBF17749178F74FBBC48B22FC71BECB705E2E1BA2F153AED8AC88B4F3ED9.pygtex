@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} select row with COUNTRY is equal Colombia}
+\PYG{n}{df\PYGZus{}data\PYGZus{}colombia} \PYG{o}{=} \PYG{n}{df\PYGZus{}data\PYGZus{}all\PYGZus{}country}\PYG{p}{[}\PYG{n}{df\PYGZus{}data\PYGZus{}all\PYGZus{}country}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}COUNTRY\PYGZsq{}}\PYG{p}{]} \PYG{o}{==} \PYG{l+s+s1}{\PYGZsq{}Colombia\PYGZsq{}}\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} print first record of Colombia}
+\PYG{n}{df\PYGZus{}data\PYGZus{}colombia}\PYG{o}{.}\PYG{n}{head}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} size dataframe}
+\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{df\PYGZus{}data\PYGZus{}colombia}\PYG{p}{)}
+\end{Verbatim}

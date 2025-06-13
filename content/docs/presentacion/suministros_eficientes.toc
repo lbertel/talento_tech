@@ -1,0 +1,8 @@
+\babel@toc {spanish}{}\relax 
+\beamer@sectionintoc {1}{Contexto del problema}{3}{0}{1}
+\beamer@sectionintoc {2}{Materiales y m\'etodos}{7}{0}{2}
+\beamer@sectionintoc {3}{Resultados}{15}{0}{3}
+\beamer@subsectionintoc {3}{1}{Análisis exploratorio}{16}{0}{3}
+\beamer@subsectionintoc {3}{2}{Análisis supervisado}{33}{0}{3}
+\beamer@subsectionintoc {3}{3}{Análisis no supervisado}{34}{0}{3}
+\beamer@sectionintoc {4}{Conclusiones}{35}{0}{4}

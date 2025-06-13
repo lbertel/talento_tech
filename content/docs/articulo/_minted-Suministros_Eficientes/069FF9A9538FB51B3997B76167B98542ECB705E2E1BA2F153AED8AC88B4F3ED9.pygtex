@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} load raw file}
+\PYG{n}{df\PYGZus{}data\PYGZus{}all\PYGZus{}country} \PYG{o}{=} \PYG{n}{pd}\PYG{o}{.}\PYG{n}{read\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/raw/data.csv\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} print all data}
+\PYG{n}{df\PYGZus{}data\PYGZus{}all\PYGZus{}country}\PYG{o}{.}\PYG{n}{info}\PYG{p}{()}
+\end{Verbatim}

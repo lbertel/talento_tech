@@ -1,0 +1,107 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} Import necessary libraries}
+\PYG{k+kn}{import} \PYG{n+nn}{os}
+\PYG{k+kn}{import} \PYG{n+nn}{csv}
+\PYG{k+kn}{import} \PYG{n+nn}{requests}
+\PYG{k+kn}{from} \PYG{n+nn}{pprint} \PYG{k+kn}{import} \PYG{n}{pprint}
+
+\PYG{c+c1}{\PYGZsh{} Set show information about API request}
+\PYG{n}{VERBOSE} \PYG{o}{=} \PYG{k+kc}{True}
+
+\PYG{c+c1}{\PYGZsh{} Define API endpoints for getting available years, products, and countries}
+\PYG{n}{api\PYGZus{}list\PYGZus{}template} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}https://api.iea.org/mes/list/}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZsq{}}
+
+\PYG{c+c1}{\PYGZsh{} Define API endpoint for getting monthly data for a specific country, year, month, and product}
+\PYG{n}{api\PYGZus{}information\PYGZus{}template} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}https://api.iea.org/mes/latest/month?COUNTRY=}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZam{}YEAR=}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZam{}MONTH=}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZam{}PRODUCT=}\PYG{l+s+si}{\PYGZpc{}s}\PYG{l+s+s1}{\PYGZam{}share=true\PYGZsq{}}
+
+\PYG{c+c1}{\PYGZsh{} Get lists of available years, products, and countries from the API}
+\PYG{n}{years} \PYG{o}{=} \PYG{n}{requests}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n}{api\PYGZus{}list\PYGZus{}template} \PYG{o}{\PYGZpc{}} \PYG{l+s+s1}{\PYGZsq{}YEAR\PYGZsq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{json}\PYG{p}{()}
+\PYG{n}{products} \PYG{o}{=} \PYG{n}{requests}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n}{api\PYGZus{}list\PYGZus{}template} \PYG{o}{\PYGZpc{}} \PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{json}\PYG{p}{()}
+\PYG{n}{countries} \PYG{o}{=} \PYG{n}{requests}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}\PYG{n}{api\PYGZus{}list\PYGZus{}template} \PYG{o}{\PYGZpc{}} \PYG{l+s+s1}{\PYGZsq{}COUNTRY\PYGZsq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{json}\PYG{p}{()}
+
+\PYG{c+c1}{\PYGZsh{} Define the header row for the CSV file that will store the data}
+\PYG{n}{header} \PYG{o}{=} \PYG{p}{[}
+\PYG{l+s+s1}{\PYGZsq{}COUNTRY\PYGZsq{}}\PYG{p}{,}           \PYG{c+c1}{\PYGZsh{} Name of the country}
+\PYG{l+s+s1}{\PYGZsq{}CODE\PYGZus{}TIME\PYGZsq{}}\PYG{p}{,}         \PYG{c+c1}{\PYGZsh{} A code that represents the month and year (e.g., JAN2010 for January 2010)}
+\PYG{l+s+s1}{\PYGZsq{}TIME\PYGZsq{}}\PYG{p}{,}              \PYG{c+c1}{\PYGZsh{} The month and year in a more human\PYGZhy{}readable format (e.g., January 2010)}
+\PYG{l+s+s1}{\PYGZsq{}YEAR\PYGZsq{}}\PYG{p}{,}              \PYG{c+c1}{\PYGZsh{} The year of the data point}
+\PYG{l+s+s1}{\PYGZsq{}MONTH\PYGZsq{}}\PYG{p}{,}             \PYG{c+c1}{\PYGZsh{} The month of the data point as a number (1\PYGZhy{}12)}
+\PYG{l+s+s1}{\PYGZsq{}MONTH\PYGZus{}NAME\PYGZsq{}}\PYG{p}{,}        \PYG{c+c1}{\PYGZsh{} The month of the data point as a string (e.g., January)}
+\PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{,}           \PYG{c+c1}{\PYGZsh{} The type of energy product (e.g., Hydro, Wind, Solar)}
+\PYG{l+s+s1}{\PYGZsq{}VALUE\PYGZsq{}}\PYG{p}{,}             \PYG{c+c1}{\PYGZsh{} The amount of electricity generated in gigawatt\PYGZhy{}hours (GWh)}
+\PYG{l+s+s1}{\PYGZsq{}DISPLAY\PYGZus{}ORDER\PYGZsq{}}\PYG{p}{,}     \PYG{c+c1}{\PYGZsh{} The order in which the products should be displayed}
+\PYG{l+s+s1}{\PYGZsq{}yearToDate\PYGZsq{}}\PYG{p}{,}        \PYG{c+c1}{\PYGZsh{} The amount of electricity generated for the current year up to the current month in GWh}
+\PYG{l+s+s1}{\PYGZsq{}previousYearToDate\PYGZsq{}}\PYG{p}{,}\PYG{c+c1}{\PYGZsh{} The amount of electricity generated for the previous year up to the current month in GWh}
+\PYG{l+s+s1}{\PYGZsq{}share\PYGZsq{}}              \PYG{c+c1}{\PYGZsh{} The share of the product in the total electricity generation for the country in decimal format}
+\PYG{p}{]}
+
+\PYG{c+c1}{\PYGZsh{} Check if data.csv file exists}
+\PYG{k}{if} \PYG{n}{os}\PYG{o}{.}\PYG{n}{path}\PYG{o}{.}\PYG{n}{isfile}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data.csv\PYGZsq{}}\PYG{p}{):}
+	\PYG{c+c1}{\PYGZsh{} Check if file is empty}
+	\PYG{k}{if} \PYG{n}{os}\PYG{o}{.}\PYG{n}{stat}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data.csv\PYGZsq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{st\PYGZus{}size} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+		\PYG{c+c1}{\PYGZsh{} Read CSV file and get the last line of it}
+		\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data.csv\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}r\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{csv\PYGZus{}file}\PYG{p}{:}
+		\PYG{n}{last\PYGZus{}line} \PYG{o}{=} \PYG{n}{csv\PYGZus{}file}\PYG{o}{.}\PYG{n}{readlines}\PYG{p}{()[}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{.}\PYG{n}{split}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{},\PYGZsq{}}\PYG{p}{)}
+
+		\PYG{c+c1}{\PYGZsh{} Extract the information from the last line get their index values}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}year} \PYG{o}{=} \PYG{n}{years}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{last\PYGZus{}line}\PYG{p}{[}\PYG{l+m+mi}{3}\PYG{p}{]))}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}month} \PYG{o}{=} \PYG{n+nb}{int}\PYG{p}{(}\PYG{n}{last\PYGZus{}line}\PYG{p}{[}\PYG{l+m+mi}{4}\PYG{p}{])}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}country} \PYG{o}{=} \PYG{n}{countries}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{last\PYGZus{}line}\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{p}{])}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}product} \PYG{o}{=} \PYG{n}{products}\PYG{o}{.}\PYG{n}{index}\PYG{p}{(}\PYG{n}{last\PYGZus{}line}\PYG{p}{[}\PYG{l+m+mi}{6}\PYG{p}{])} \PYG{o}{+} \PYG{l+m+mi}{1}
+
+	\PYG{k}{else}\PYG{p}{:}
+		\PYG{c+c1}{\PYGZsh{} If CSV file is empty}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}year}\PYG{p}{,} \PYG{n}{index\PYGZus{}last\PYGZus{}month}\PYG{p}{,} \PYG{n}{index\PYGZus{}last\PYGZus{}country}\PYG{p}{,} \PYG{n}{index\PYGZus{}last\PYGZus{}product} \PYG{o}{=} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{,} \PYG{l+m+mi}{0}
+
+\PYG{c+c1}{\PYGZsh{} Open CSV file for writing}
+\PYG{k}{with} \PYG{n+nb}{open}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data.csv\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}a+\PYGZsq{}}\PYG{p}{,} \PYG{n}{newline}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{)} \PYG{k}{as} \PYG{n}{csv\PYGZus{}file}\PYG{p}{:}
+	\PYG{n}{writer} \PYG{o}{=} \PYG{n}{csv}\PYG{o}{.}\PYG{n}{DictWriter}\PYG{p}{(}\PYG{n}{csv\PYGZus{}file}\PYG{p}{,} \PYG{n}{fieldnames}\PYG{o}{=}\PYG{n}{header}\PYG{p}{)}
+
+	\PYG{c+c1}{\PYGZsh{} Scrape the data and write it to the CSV file}
+	\PYG{k}{for} \PYG{n}{year} \PYG{o+ow}{in} \PYG{n}{years}\PYG{p}{[}\PYG{n}{index\PYGZus{}last\PYGZus{}year}\PYG{p}{:]:}
+		\PYG{k}{for} \PYG{n}{month} \PYG{o+ow}{in} \PYG{n+nb}{range}\PYG{p}{(}\PYG{n}{index\PYGZus{}last\PYGZus{}month}\PYG{p}{,} \PYG{l+m+mi}{13}\PYG{p}{):}
+			\PYG{k}{for} \PYG{n}{country} \PYG{o+ow}{in} \PYG{n}{countries}\PYG{p}{[}\PYG{n}{index\PYGZus{}last\PYGZus{}country}\PYG{p}{:]:}
+				\PYG{c+c1}{\PYGZsh{} Replace apostrophes in the country name with \PYGZpc{}27 to create a valid URL}
+				\PYG{n}{country} \PYG{o}{=} \PYG{n}{country}\PYG{o}{.}\PYG{n}{replace}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZpc{}27\PYGZsq{}}\PYG{p}{)}
+
+				\PYG{k}{for} \PYG{n}{product} \PYG{o+ow}{in} \PYG{n}{products}\PYG{p}{[}\PYG{n}{index\PYGZus{}last\PYGZus{}product}\PYG{p}{:]:}
+					\PYG{c+c1}{\PYGZsh{} Send an API request to get monthly data for the current country, year, month and product}
+					\PYG{n}{response} \PYG{o}{=} \PYG{n}{requests}\PYG{o}{.}\PYG{n}{get}\PYG{p}{(}
+						\PYG{n}{api\PYGZus{}information\PYGZus{}template} \PYG{o}{\PYGZpc{}} \PYG{p}{(}\PYG{n}{country}\PYG{p}{,} \PYG{n}{year}\PYG{p}{,} \PYG{n}{month}\PYG{p}{,} \PYG{n}{product}\PYG{p}{)}
+					\PYG{p}{)}
+
+					\PYG{c+c1}{\PYGZsh{} Check if the API response is OK}
+					\PYG{k}{if} \PYG{n}{response}\PYG{o}{.}\PYG{n}{ok}\PYG{p}{:}
+						\PYG{c+c1}{\PYGZsh{} Parse the response JSON}
+						\PYG{n}{response} \PYG{o}{=} \PYG{n}{response}\PYG{o}{.}\PYG{n}{json}\PYG{p}{()}
+
+
+						\PYG{c+c1}{\PYGZsh{} if response has data}
+						\PYG{k}{if} \PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{response}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}latest\PYGZsq{}}\PYG{p}{])} \PYG{o}{!=} \PYG{l+m+mi}{0}\PYG{p}{:}
+
+							\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{response}\PYG{p}{)}
+
+							\PYG{c+c1}{\PYGZsh{} Create a dictionary of the data to write to the CSV file}
+							\PYG{n}{result} \PYG{o}{=} \PYG{n+nb}{dict}\PYG{p}{()}
+
+							\PYG{c+c1}{\PYGZsh{} Extract the data from the response and add it to the result dictionary}
+							\PYG{k}{for} \PYG{n}{key} \PYG{o+ow}{in} \PYG{n}{response}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}latest\PYGZsq{}}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{.}\PYG{n}{keys}\PYG{p}{():}
+								\PYG{n}{result}\PYG{p}{[}\PYG{n}{key}\PYG{p}{]} \PYG{o}{=} \PYG{n}{response}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}latest\PYGZsq{}}\PYG{p}{][}\PYG{l+m+mi}{0}\PYG{p}{][}\PYG{n}{key}\PYG{p}{]}
+
+							\PYG{c+c1}{\PYGZsh{} Add year\PYGZhy{}to\PYGZhy{}date, previous\PYGZhy{}year\PYGZhy{}to\PYGZhy{}date and share data to the result dictionary}
+							\PYG{n}{result}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}yearToDate\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{response}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}yearToDate\PYGZsq{}}\PYG{p}{]}
+							\PYG{n}{result}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}previousYearToDate\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{response}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}previousYearToDate\PYGZsq{}}\PYG{p}{]}
+							\PYG{n}{result}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}share\PYGZsq{}}\PYG{p}{]} \PYG{o}{=} \PYG{n}{response}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}share\PYGZsq{}}\PYG{p}{]}
+
+							\PYG{c+c1}{\PYGZsh{} Write the result dictionary to the CSV file}
+							\PYG{n}{writer}\PYG{o}{.}\PYG{n}{writerow}\PYG{p}{(}\PYG{n}{result}\PYG{p}{)}
+
+							\PYG{c+c1}{\PYGZsh{} If verbose mode is on, print the result for this month}
+							\PYG{k}{if} \PYG{n}{VERBOSE}\PYG{p}{:}
+								\PYG{n}{pprint}\PYG{p}{(}\PYG{n}{result}\PYG{p}{,} \PYG{n}{sort\PYGZus{}dicts}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+								\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZus{}\PYGZsq{}}\PYG{p}{)}
+
+		\PYG{n}{index\PYGZus{}last\PYGZus{}product} \PYG{o}{=} \PYG{l+m+mi}{0}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}month} \PYG{o}{=} \PYG{l+m+mi}{1}
+		\PYG{n}{index\PYGZus{}last\PYGZus{}country} \PYG{o}{=} \PYG{l+m+mi}{0}
+\end{Verbatim}

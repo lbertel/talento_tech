@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} save the new dataframe}
+\PYG{n}{filter\PYGZus{}total}\PYG{o}{.}\PYG{n}{to\PYGZus{}csv}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}data/processed/colombia\PYGZus{}data.csv\PYGZsq{}}\PYG{p}{,} \PYG{n}{index}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} information dataframe}
+\PYG{n}{filter\PYGZus{}total}\PYG{o}{.}\PYG{n}{info}\PYG{p}{()}
+\end{Verbatim}

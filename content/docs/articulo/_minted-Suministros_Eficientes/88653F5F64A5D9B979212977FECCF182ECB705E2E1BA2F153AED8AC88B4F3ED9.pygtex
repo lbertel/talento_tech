@@ -1,0 +1,30 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{df\PYGZus{}pivot} \PYG{o}{=} \PYG{n}{colombia\PYGZus{}df}\PYG{o}{.}\PYG{n}{pivot\PYGZus{}table}\PYG{p}{(}\PYG{n}{index}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}YEAR\PYGZsq{}}\PYG{p}{,} \PYG{n}{columns}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{,} \PYG{n}{values}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}VALUE\PYGZsq{}}\PYG{p}{,} \PYG{n}{aggfunc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}sum\PYGZsq{}}\PYG{p}{)}\PYG{o}{.}\PYG{n}{fillna}\PYG{p}{(}\PYG{l+m+mi}{0}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} 2. data scaling}
+\PYG{n}{scaler} \PYG{o}{=} \PYG{n}{StandardScaler}\PYG{p}{()}
+\PYG{n}{data\PYGZus{}scaled} \PYG{o}{=} \PYG{n}{scaler}\PYG{o}{.}\PYG{n}{fit\PYGZus{}transform}\PYG{p}{(}\PYG{n}{df\PYGZus{}pivot}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} 3. Reducing dimensions with PCA}
+\PYG{n}{pca} \PYG{o}{=} \PYG{n}{PCA}\PYG{p}{(}\PYG{n}{n\PYGZus{}components}\PYG{o}{=}\PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{n}{pca\PYGZus{}result} \PYG{o}{=} \PYG{n}{pca}\PYG{o}{.}\PYG{n}{fit\PYGZus{}transform}\PYG{p}{(}\PYG{n}{data\PYGZus{}scaled}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} 4. Group by with KMeans}
+\PYG{n}{kmeans} \PYG{o}{=} \PYG{n}{KMeans}\PYG{p}{(}\PYG{n}{n\PYGZus{}clusters}\PYG{o}{=}\PYG{l+m+mi}{3}\PYG{p}{,} \PYG{n}{random\PYGZus{}state}\PYG{o}{=}\PYG{l+m+mi}{42}\PYG{p}{)}
+\PYG{n}{clusters} \PYG{o}{=} \PYG{n}{kmeans}\PYG{o}{.}\PYG{n}{fit\PYGZus{}predict}\PYG{p}{(}\PYG{n}{pca\PYGZus{}result}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} 5. show result}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{figure}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{6}\PYG{p}{))}
+\PYG{n}{sns}\PYG{o}{.}\PYG{n}{scatterplot}\PYG{p}{(}\PYG{n}{x}\PYG{o}{=}\PYG{n}{pca\PYGZus{}result}\PYG{p}{[:,} \PYG{l+m+mi}{0}\PYG{p}{],} \PYG{n}{y}\PYG{o}{=}\PYG{n}{pca\PYGZus{}result}\PYG{p}{[:,} \PYG{l+m+mi}{1}\PYG{p}{],} \PYG{n}{hue}\PYG{o}{=}\PYG{n}{clusters}\PYG{p}{,} \PYG{n}{palette}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}Set2\PYGZsq{}}\PYG{p}{,} \PYG{n}{s}\PYG{o}{=}\PYG{l+m+mi}{100}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} Añadir etiquetas de años}
+\PYG{k}{for} \PYG{n}{i}\PYG{p}{,} \PYG{n}{year} \PYG{o+ow}{in} \PYG{n+nb}{enumerate}\PYG{p}{(}\PYG{n}{df\PYGZus{}pivot}\PYG{o}{.}\PYG{n}{index}\PYG{p}{):}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{text}\PYG{p}{(}\PYG{n}{pca\PYGZus{}result}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{0}\PYG{p}{]}\PYG{o}{+}\PYG{l+m+mf}{0.02}\PYG{p}{,} \PYG{n}{pca\PYGZus{}result}\PYG{p}{[}\PYG{n}{i}\PYG{p}{,} \PYG{l+m+mi}{1}\PYG{p}{]}\PYG{o}{+}\PYG{l+m+mf}{0.02}\PYG{p}{,} \PYG{n+nb}{str}\PYG{p}{(}\PYG{n}{year}\PYG{p}{),} \PYG{n}{fontsize}\PYG{o}{=}\PYG{l+m+mi}{9}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{title}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Clustering de años según patrón energético (PCA + KMeans)\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{xlabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}YEAR\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{ylabel}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}VALUE\PYGZsq{}}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{grid}\PYG{p}{(}\PYG{k+kc}{True}\PYG{p}{)}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{tight\PYGZus{}layout}\PYG{p}{()}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{show}\PYG{p}{()}
+\end{Verbatim}

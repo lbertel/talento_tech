@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{filt} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Coal\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Natural gas\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Fossil fuels\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Nuclear\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{df\PYGZus{}notren} \PYG{o}{=} \PYG{n}{colombia\PYGZus{}df}\PYG{p}{[}\PYG{n}{colombia\PYGZus{}df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{isin}\PYG{p}{(}\PYG{n}{filt}\PYG{p}{)]}
+\PYG{n}{df\PYGZus{}notren}\PYG{o}{.}\PYG{n}{head}\PYG{p}{()}	
+\end{Verbatim}

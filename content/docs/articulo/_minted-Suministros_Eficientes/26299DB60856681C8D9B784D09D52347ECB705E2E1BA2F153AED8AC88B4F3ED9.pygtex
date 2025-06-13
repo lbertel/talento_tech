@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{filt} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Non\PYGZhy{}renewables\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Renewables\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{df\PYGZus{}nr} \PYG{o}{=} \PYG{n}{colombia\PYGZus{}df}\PYG{p}{[}\PYG{n}{colombia\PYGZus{}df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{isin}\PYG{p}{(}\PYG{n}{filt}\PYG{p}{)]}
+\PYG{n}{df\PYGZus{}nr}\PYG{o}{.}\PYG{n}{head}\PYG{p}{()}
+\end{Verbatim}

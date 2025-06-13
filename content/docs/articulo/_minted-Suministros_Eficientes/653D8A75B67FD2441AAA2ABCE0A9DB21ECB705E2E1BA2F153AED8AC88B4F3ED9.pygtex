@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} show columns after delete}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{df\PYGZus{}data\PYGZus{}colombia}\PYG{o}{.}\PYG{n}{columns}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} delete columns}
+\PYG{n}{df\PYGZus{}temp} \PYG{o}{=} \PYG{n}{df\PYGZus{}data\PYGZus{}colombia}\PYG{o}{.}\PYG{n}{drop}\PYG{p}{([}\PYG{l+s+s1}{\PYGZsq{}COUNTRY\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}CODE\PYGZus{}TIME\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}TIME\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}MONTH\PYGZus{}NAME\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}DISPLAY\PYGZus{}ORDER\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}yearToDate\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}previousYearToDate\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}share\PYGZsq{}}\PYG{p}{],} \PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} show columns before delete}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{n}{df\PYGZus{}temp}\PYG{o}{.}\PYG{n}{columns}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZsq{}}\PYG{p}{)}
+\PYG{n+nb}{print}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{df\PYGZus{}temp}\PYG{o}{.}\PYG{n}{info}\PYG{p}{()}
+\end{Verbatim}

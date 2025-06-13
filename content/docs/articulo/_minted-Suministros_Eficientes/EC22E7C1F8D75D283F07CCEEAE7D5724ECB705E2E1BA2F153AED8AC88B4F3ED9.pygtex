@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} dimension of dataframe}
+\PYG{n}{filter\PYGZus{}total}\PYG{o}{.}\PYG{n}{shape}
+
+\PYG{c+c1}{\PYGZsh{} missing values}
+\PYG{n}{filter\PYGZus{}total}\PYG{o}{.}\PYG{n}{isnull}\PYG{p}{()}\PYG{o}{.}\PYG{n}{sum}\PYG{p}{(}\PYG{n}{axis}\PYG{o}{=}\PYG{l+m+mi}{0}\PYG{p}{)}
+\end{Verbatim}

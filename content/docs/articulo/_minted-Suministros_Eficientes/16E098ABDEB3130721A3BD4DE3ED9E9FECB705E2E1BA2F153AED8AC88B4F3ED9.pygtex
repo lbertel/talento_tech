@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{filt} \PYG{o}{=} \PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}Wind\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Solar\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Other renewables\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Hydro\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Geothermal\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}Combustible renewables\PYGZsq{}}\PYG{p}{]}
+\PYG{n}{df\PYGZus{}ren} \PYG{o}{=} \PYG{n}{colombia\PYGZus{}df}\PYG{p}{[}\PYG{n}{colombia\PYGZus{}df}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{isin}\PYG{p}{(}\PYG{n}{filt}\PYG{p}{)]}
+\PYG{n}{df\PYGZus{}ren}\PYG{o}{.}\PYG{n}{head}\PYG{p}{()}
+\end{Verbatim}

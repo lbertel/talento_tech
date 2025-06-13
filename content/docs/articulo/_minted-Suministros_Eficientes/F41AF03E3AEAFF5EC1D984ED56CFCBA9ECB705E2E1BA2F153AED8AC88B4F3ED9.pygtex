@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZsh{} delete row with null values}
+\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{df\PYGZus{}temp}\PYG{p}{)}
+\PYG{n}{df\PYGZus{}without\PYGZus{}null} \PYG{o}{=} \PYG{n}{df\PYGZus{}temp}\PYG{o}{.}\PYG{n}{dropna}\PYG{p}{(}\PYG{n}{how}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}any\PYGZsq{}}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} size dataframe without null}
+\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{df\PYGZus{}without\PYGZus{}null}\PYG{p}{)}
+
+\PYG{c+c1}{\PYGZsh{} eliminate row with PRODUCT containt Total}
+\PYG{n}{filter\PYGZus{}total} \PYG{o}{=} \PYG{n}{df\PYGZus{}without\PYGZus{}null}\PYG{p}{[}\PYG{o}{\PYGZti{}}\PYG{n}{df\PYGZus{}without\PYGZus{}null}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}PRODUCT\PYGZsq{}}\PYG{p}{]}\PYG{o}{.}\PYG{n}{str}\PYG{o}{.}\PYG{n}{contains}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Total\PYGZsq{}}\PYG{p}{,} \PYG{n}{case}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{,} \PYG{n}{na}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)]}
+
+\PYG{n+nb}{len}\PYG{p}{(}\PYG{n}{filter\PYGZus{}total}\PYG{p}{)}
+\end{Verbatim}

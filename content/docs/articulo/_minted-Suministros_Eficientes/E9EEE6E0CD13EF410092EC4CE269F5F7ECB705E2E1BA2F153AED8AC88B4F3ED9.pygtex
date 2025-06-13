@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{labels} \PYG{o}{=} \PYG{n}{matrix}\PYG{o}{.}\PYG{n}{index}
+
+\PYG{n}{fig}\PYG{p}{,} \PYG{n}{ax} \PYG{o}{=} \PYG{n}{plt}\PYG{o}{.}\PYG{n}{subplots}\PYG{p}{(}\PYG{n}{figsize}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{,} \PYG{l+m+mi}{4}\PYG{p}{))}
+\PYG{n}{fig}\PYG{o}{.}\PYG{n}{suptitle}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}Matriz energética de Colombia\PYGZsq{}}\PYG{p}{)}
+
+\PYG{n}{ax}\PYG{o}{.}\PYG{n}{pie}\PYG{p}{(}\PYG{n}{x}\PYG{o}{=}\PYG{n}{matrix}\PYG{p}{,} \PYG{n}{labels}\PYG{o}{=}\PYG{n}{labels}\PYG{p}{,} \PYG{n}{autopct}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}.0f\PYGZpc{}\PYGZpc{}}\PYG{l+s+s1}{\PYGZsq{}}\PYG{p}{,} \PYG{n}{rotatelabels}\PYG{o}{=}\PYG{k+kc}{True}\PYG{p}{,}\PYG{n}{startangle}\PYG{o}{=}\PYG{l+m+mi}{180}\PYG{p}{,} \PYG{n}{colors}\PYG{o}{=}\PYG{n}{sns}\PYG{o}{.}\PYG{n}{color\PYGZus{}palette}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}pastel\PYGZdq{}}\PYG{p}{));}
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{legend}\PYG{p}{(}\PYG{n}{loc}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}center left\PYGZsq{}}\PYG{p}{,} \PYG{n}{bbox\PYGZus{}to\PYGZus{}anchor}\PYG{o}{=}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{p}{,} \PYG{l+m+mf}{0.5}\PYG{p}{),} \PYG{n}{labels}\PYG{o}{=}\PYG{p}{[}\PYG{l+s+s2}{\PYGZdq{}}\PYG{l+s+si}{\PYGZob{}\PYGZcb{}}\PYG{l+s+s2}{ \PYGZhy{} }\PYG{l+s+si}{\PYGZob{}:.2f\PYGZcb{}}\PYG{l+s+s2}{\PYGZpc{}\PYGZdq{}}\PYG{o}{.}\PYG{n}{format}\PYG{p}{(}\PYG{n}{i}\PYG{p}{,}\PYG{n}{j}\PYG{o}{/}\PYG{n+nb}{sum}\PYG{p}{(}\PYG{n}{matrix}\PYG{p}{)}\PYG{o}{*}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{for} \PYG{n}{i}\PYG{p}{,}\PYG{n}{j} \PYG{o+ow}{in} \PYG{n+nb}{zip}\PYG{p}{(}\PYG{n}{labels}\PYG{p}{,}\PYG{n}{matrix}\PYG{p}{)],} \PYG{n}{frameon}\PYG{o}{=}\PYG{k+kc}{False}\PYG{p}{)}
+
+\PYG{n}{plt}\PYG{o}{.}\PYG{n}{tight\PYGZus{}layout}\PYG{p}{()}
+\end{Verbatim}

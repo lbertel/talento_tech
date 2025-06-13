@@ -1,0 +1,7 @@
+\frametitle{Clustering de años según patrón energético (PCA + KMeans)}
+\begin{figure}[t]
+^^I^^I^^I\centering
+^^I^^I^^I\includegraphics[width=0.9\linewidth]{../../reports/fig_19}
+^^I^^I^^I\caption{Clustering de años según patrón energético (PCA + KMeans)}
+^^I^^I^^I\label{fig:fig19}
+\end{figure}
